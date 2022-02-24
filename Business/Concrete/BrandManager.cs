@@ -1,4 +1,5 @@
-﻿using Business.Constant;
+﻿using Business.Abstract;
+using Business.Constant;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class BrandManager
+    public class BrandManager:IBrandService
     {
         IBrandDal _brandDal;
 
