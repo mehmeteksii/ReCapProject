@@ -23,12 +23,8 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            if (car.Description.Length <= 2 && car.DailyPrice > 0)  // KURALIMIZ: Araba ismi minimum 2 karakter olmalıdır ve araba günlük fiyatı 0'dan büyük olmalıdır.
-            {
-                _carDal.Add(car);
-                Console.WriteLine("Araba Eklendi");
-            }                     
-                return new ErrorResult(Messages.Error);          
+            _carDal.Add(car);
+            return new SuccessResult(Messages.Added);
         }
 
         public IResult Delete(Car car)
@@ -37,30 +33,30 @@ namespace Business.Concrete
             return new ErrorResult(Messages.Deleted);
         }
 
-        public IDataResult <List<Car>> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour==22)
+            if (DateTime.Now.Hour == 22)
             {
-                return new ErrorDataResult<List<Car>> (Messages.Error);
-            } 
+                return new ErrorDataResult<List<Car>>(Messages.Error);
+            }
 
-            return new SuccessDataResult<List<Car>> (_carDal.GetAll(),Messages.Listed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.Listed);
 
         }
 
-        public IDataResult <List<CarDetailDto>> GetCarDetailDtos()
+        public IDataResult<List<CarDetailDto>> GetCarDetailDtos()
         {
-            return new SuccessDataResult<List<CarDetailDto>> (_carDal.GetCarDetails(),Messages.Listed);
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.Listed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return new SuccessDataResult<List<Car>> (_carDal.GetAll(c => c.BrandId == id));  //her c için c'nin BrandId'si benim gönderdiğim id ye yani BrandId'ye eşitse onları döndür
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));  //her c için c'nin BrandId'si benim gönderdiğim id ye yani BrandId'ye eşitse onları döndür
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return new SuccessDataResult<List<Car>> (_carDal.GetAll(c => c.ColorId == id));  //her c için c'nin ColorId'si benim gönderdiğim id ye yani ColorId'ye eşitse onları döndür
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));  //her c için c'nin ColorId'si benim gönderdiğim id ye yani ColorId'ye eşitse onları döndür
         }
 
         public IResult Update(Car car)
